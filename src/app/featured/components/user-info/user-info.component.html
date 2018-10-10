@@ -1,0 +1,96 @@
+<form class="user-info" [formGroup]="userInfoForm" name="formUserInfo" tabindex="-1">
+  <div class="user-info-content">
+    <fieldset>
+      <div layout="row">
+        <div flex="55">
+          <div class="user-info-field user-info-field--emphasis">
+            <input type="text" name="lastName" formControlName="lastName" [(ngModel)]="user.lastName" (keyup)="onUserChange('lastName')" placeholder="last name"
+            />
+          </div>
+        </div>
+
+        <div flex="45">
+          <div class="user-info-field user-info-field--bordered user-info-field--emphasis">
+            <input type="text" name="firstName" formControlName="firstName" [(ngModel)]="user.firstName" (keyup)="onUserChange('firstName')" placeholder="first name"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div layout="row">
+        <div flex="65">
+          <div class="user-info-field">
+            <input type="text" name="phone" formControlName="phone" [(ngModel)]="user.phone" (keyup)="onUserChange('phone')" placeholder="PHONE" />
+          </div>
+        </div>
+
+        <div flex="35">
+          <div class="user-info-field user-info-field--bordered">
+            <input type="text" name="memberNo" formControlName="memberNo" [(ngModel)]="user.id" (keyup)="onUserChange('id')" placeholder="Member number"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div layout="row">
+        <div flex>
+          <div class="user-info-field">
+            <input type="text" name="email" formControlName="email" [(ngModel)]="user.email" (keyup)="onUserChange('email')" placeholder="Mail" ng-readonly="(user.id && user.email && user.lastActivityAt) || readonly"/>
+          </div>
+        </div>
+      </div>
+
+      <div layout="row">
+          <div flex>
+              <div class="user-info-field"> 
+                <button type="button" (click)="resetUser()" >RESET</button>
+              </div>
+          </div>      
+      </div>
+
+      <div class="user-info-results" *ngIf="searchResults.length">
+        <div class="user-info-results-header">
+          <span class="user-info-results-close icon-close" (click)="closeResults()">x</span>
+          {{ resultsInfo.length }} résultats
+        </div>
+        <div class="user-info-results-content">
+          <div class="md-list">
+            <div *ngFor="let result of searchResults; last as isLast" class="md-item">
+              <div class="ios-list-title">
+                <span data-icon="users"></span>
+                {{ result.note }}
+              </div>
+
+              <div class="md-item-content" (click)="setUser(result)">
+                <div class="md-tile-content">
+                  <div layout="row" layout-align="center-center">
+                    <div flex>
+                      <div class="user-info-results-item">
+                        {{ result.firstName }}
+                        <strong>{{ result.lastName }}</strong>
+                        <span *ngIf="result.memberNo" class="push-half--left muted">
+                          {{ result.memberNo }}
+                        </span>
+                      </div>
+                      <div class="vk-content">
+                        <span *ngIf="result.phone" class="push-half--right">
+                          <span class="icon icon-phone"></span>
+                          {{ result.phone }}
+                        </span>
+                        <span ng-if="result.email">
+                          <span class="icon icon-email"></span>
+                          {{ result.email }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="md-divider" *ngIf="!isLast"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+</form>
